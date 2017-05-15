@@ -54,12 +54,19 @@ class Board extends React.Component {
      return (
        <div>
          <div className="status">{status}</div>
-          {this.renderRow(BOARD_ROWS - 1)}
-          {this.renderRow(BOARD_ROWS - 2)}
-          {this.renderRow(BOARD_ROWS - 3)}
+          {this.renderRow(rowNum(1))}
+          {this.renderRow(rowNum(2))}
+          {this.renderRow(rowNum(3))}
       </div>
     );
   }
+}
+
+function rowNum(row) {
+  if (row > BOARD_ROWS || row <= 0) {
+    throw 'Error: Row Number is Out of Bounds!';
+  } 
+  return BOARD_ROWS - row;
 }
 
 class Game extends React.Component {
