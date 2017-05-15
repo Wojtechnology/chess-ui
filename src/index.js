@@ -2,27 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 
-
-function calculateWinner(squares) {
-  const lines = [
-    [0, 1, 2],
-    [3, 4, 5],
-    [6, 7, 8],
-    [0, 3, 6],
-    [1, 4, 7],
-    [2, 5, 8],
-    [0, 4, 8],
-    [2, 4, 6],
-  ];
-
-  for (let i = 0; i < lines.length; i++) {
-    const [a, b, c] = lines[i];
-    if (squares[a] && squares[a] === squares[b] && squares[a] === squares[c]) {
-      return squares[a];
-    }
-  }
-  return null;
-}
+const BOARD_ROWS = 3;
 
 function Square(props) {
   return (
@@ -59,31 +39,24 @@ class Board extends React.Component {
     );    
   }
 
-
-  createRow(row) {
-    let squares = Array(3);
-    for (let c = 0; c < 3; c++) {
-      let i = 3 * row + c;
-      squares[c] = 
-        <Square 
-          value={i}
-          onClick={() => this.handleClick(i)}
-        /> 
-    }
+  renderRow(row) {
     return (
       <div className="board-row">
-        {squares}
+        {this.renderSquare(BOARD_ROWS * row + 0)}
+        {this.renderSquare(BOARD_ROWS * row + 1)}
+        {this.renderSquare(BOARD_ROWS * row + 2)}
       </div>
-    )
+    );
+
   }
 
-  render() {
-    return (
-      <div>
-        <div className="status">{status}</div>
-          {createRow(2)}
-          {createRow(1)}
-          {createRow(0)}
+   render() {
+     return (
+       <div>
+         <div className="status">{status}</div>
+          {this.renderRow(BOARD_ROWS - 1)}
+          {this.renderRow(BOARD_ROWS - 2)}
+          {this.renderRow(BOARD_ROWS - 3)}
       </div>
     );
   }
