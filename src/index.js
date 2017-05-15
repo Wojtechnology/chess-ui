@@ -54,18 +54,19 @@ class Board extends React.Component {
     );    
   }
 
-  renderRow(row) {
-    const rank = row + 1;
+  renderRow(rowNumber) {
+    const rank = rowNumber + 1;
+    const cols = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'];
     return (
       <div className="board-row">
-        {this.renderSquare(squareNumber(row, 0), rank, 'a')}
-        {this.renderSquare(squareNumber(row, 1), rank, 'b')}
-        {this.renderSquare(squareNumber(row, 2), rank, 'c')}
-        {this.renderSquare(squareNumber(row, 3), rank, 'd')}
-        {this.renderSquare(squareNumber(row, 4), rank, 'e')}
-        {this.renderSquare(squareNumber(row, 5), rank, 'f')}
-        {this.renderSquare(squareNumber(row, 6), rank, 'g')}
-        {this.renderSquare(squareNumber(row, 7), rank, 'h')}
+        {this.renderSquare(squareNumber(rowNumber, 0), rank, cols[0])}
+        {this.renderSquare(squareNumber(rowNumber, 1), rank, cols[1])}
+        {this.renderSquare(squareNumber(rowNumber, 2), rank, cols[2])}
+        {this.renderSquare(squareNumber(rowNumber, 3), rank, cols[3])}
+        {this.renderSquare(squareNumber(rowNumber, 4), rank, cols[4])}
+        {this.renderSquare(squareNumber(rowNumber, 5), rank, cols[5])}
+        {this.renderSquare(squareNumber(rowNumber, 6), rank, cols[6])}
+        {this.renderSquare(squareNumber(rowNumber, 7), rank, cols[7])}
       </div>
     );
 
