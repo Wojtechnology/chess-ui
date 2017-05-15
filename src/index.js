@@ -42,9 +42,9 @@ class Board extends React.Component {
   renderRow(row) {
     return (
       <div className="board-row">
-        {this.renderSquare(BOARD_ROWS * row + 0)}
-        {this.renderSquare(BOARD_ROWS * row + 1)}
-        {this.renderSquare(BOARD_ROWS * row + 2)}
+        {this.renderSquare(squareNumber(row, 0))}
+        {this.renderSquare(squareNumber(row, 1))}
+        {this.renderSquare(squareNumber(row, 2))}
       </div>
     );
 
@@ -62,9 +62,13 @@ class Board extends React.Component {
   }
 }
 
+function squareNumber(row, column) {
+  return BOARD_ROWS * row + column;
+}
+
 function rowNum(row) {
   if (row > BOARD_ROWS || row <= 0) {
-    throw 'Error: Row Number is Out of Bounds!';
+    throw "Error: Row Number is Out of Bounds!";
   } 
   return BOARD_ROWS - row;
 }
