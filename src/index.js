@@ -2,6 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 
+
 function calculateWinner(squares) {
   const lines = [
     [0, 1, 2],
@@ -42,9 +43,6 @@ class Board extends React.Component {
 
   handleClick(i) {
     const squares = this.state.squares.slice();
-    if (calculateWinner(squares) || squares[i]) {
-      return;
-    }
     squares[i] = this.state.xIsNext ? 'X' : 'O';
     this.setState({
       squares: squares,
@@ -58,36 +56,34 @@ class Board extends React.Component {
         value={this.state.squares[i]}
         onClick={() => this.handleClick(i)}
       /> 
-    );
-    
+    );    
   }
 
-  renderRow(row) {
+
+  createRow(row) {
+    let squares = Array(3);
+    for (let c = 0; c < 3; c++) {
+      let i = 3 * row + c;
+      squares[c] = 
+        <Square 
+          value={i}
+          onClick={() => this.handleClick(i)}
+        /> 
+    }
     return (
       <div className="board-row">
-        {this.renderSquare(3 * row + 0)}
-        {this.renderSquare(3 * row + 1)}
-        {this.renderSquare(3 * row + 2)}
+        {squares}
       </div>
-    );
-
+    )
   }
 
   render() {
-    const winner = calculateWinner(this.state.squares);
-    let status;
-    if (winner) {
-      status = 'Winner: ' + winner;
-    } else {
-      status = 'Next player: ' + (this.state.xIsNext ? 'X' : 'O');
-    }
-
     return (
       <div>
         <div className="status">{status}</div>
-          {this.renderRow(2)}
-          {this.renderRow(1)}
-          {this.renderRow(0)}
+          {createRow(2)}
+          {createRow(1)}
+          {createRow(0)}
       </div>
     );
   }
@@ -99,10 +95,6 @@ class Game extends React.Component {
       <div className="game">
         <div className="game-board">
           <Board />
-        </div>
-        <div className="game-info">
-          <div>{/* status */}</div>
-          <ol>{/* TODO */}</ol>
         </div>
       </div>
     );
