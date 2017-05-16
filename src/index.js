@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 
-const BOARD_ROWS = 8;
+const BOARD_SIZE = 8;
 const PIECES = ['wR','wN','wB','wQ','wK','wB','wN','wR','wP','wP','wP','wP','wP','wP','wP','wP','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','bP','bP','bP','bP','bP','bP','bP','bP','bR','bN','bB','bQ','bK','bB','bN','bR'];
 
 function Square(props) {
@@ -14,14 +14,14 @@ function Square(props) {
 }
 
 function squareNumber(row, column) {
-  return BOARD_ROWS * row + column;
+  return BOARD_SIZE * row + column;
 }
 
 function rowNum(row) {
-  if (row > BOARD_ROWS || row <= 0) {
+  if (row > BOARD_SIZE || row <= 0) {
     throw new Error("Row Number is Out of Bounds!");
   } 
-  return BOARD_ROWS - row;
+  return BOARD_SIZE - row;
 }
 
 class Board extends React.Component {
@@ -29,7 +29,6 @@ class Board extends React.Component {
     super();
     this.state = {
       squares: PIECES,
-      xIsNext: true,
       selectedIndex: null,
     };
   }
@@ -39,7 +38,22 @@ class Board extends React.Component {
     const selectedIndex = this.state.selectedIndex;
 
     if (selectedIndex !== null) {
-      this.handleSecondClick(clickedIndex);
+
+      // handle second click
+      if (clickedIndex === selectedIndex) {
+        this.setState({selectedIndex: null});
+        return;
+      }
+
+      // move piece
+      squares[clickedIndex] = squares[selectedIndex];
+      squares[selectedIndex] = "";
+
+      this.setState({
+        selectedIndex: null,
+        squares: squares,
+      });
+        
       return;
     }
 
@@ -49,28 +63,6 @@ class Board extends React.Component {
     }
 
     this.setState({selectedIndex: clickedIndex});
-  }
-
-  handleSecondClick(clickedIndex) {
-    const squares = this.state.squares.slice();
-    const selectedIndex = this.state.selectedIndex;
-
-    if (selectedIndex === null) {
-      throw new Error("handleSecondClick invoked before first click!");
-    }
-
-    if (clickedIndex === selectedIndex) {
-      this.setState({selectedIndex: null});
-      return;
-    }
-
-    squares[clickedIndex] = squares[selectedIndex];
-    squares[selectedIndex] = "";
-
-    this.setState({
-      selectedIndex: null,
-      squares: squares,
-    });
   }
 
   renderSquare(n,r, c) {
