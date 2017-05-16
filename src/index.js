@@ -13,8 +13,12 @@ function Square(props) {
   );
 }
 
-function squareNumber(row, column) {
-  return BOARD_SIZE * row + column;
+function squareNumber(row, col) {
+  return (BOARD_SIZE * row) + columnNumber(col);
+}
+
+function columnNumber(col) {
+  return col.charCodeAt(0) - 97;
 }
 
 function rowNum(row) {
@@ -65,34 +69,29 @@ class Board extends React.Component {
     this.setState({selectedIndex: clickedIndex});
   }
 
-  renderSquare(n,r, c) {
+  renderSquare(squareNumber) {
     return (
       <Square 
-        value={this.state.squares[n]}
-        sq={n}
-        row={r}
-        column={c}
-        onClick={() => this.handleClick(n)}
+        value={this.state.squares[squareNumber]}
+        squareNumber={squareNumber}
+        onClick={() => this.handleClick(squareNumber)}
       /> 
     );    
   }
 
-  renderRow(rowNumber) {
-    const rank = rowNumber + 1;
-    const cols = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'];
+  renderRow(row) {
     return (
       <div className="board-row">
-        {this.renderSquare(squareNumber(rowNumber, 0), rank, cols[0])}
-        {this.renderSquare(squareNumber(rowNumber, 1), rank, cols[1])}
-        {this.renderSquare(squareNumber(rowNumber, 2), rank, cols[2])}
-        {this.renderSquare(squareNumber(rowNumber, 3), rank, cols[3])}
-        {this.renderSquare(squareNumber(rowNumber, 4), rank, cols[4])}
-        {this.renderSquare(squareNumber(rowNumber, 5), rank, cols[5])}
-        {this.renderSquare(squareNumber(rowNumber, 6), rank, cols[6])}
-        {this.renderSquare(squareNumber(rowNumber, 7), rank, cols[7])}
+        {this.renderSquare(squareNumber(row, 'a'))}
+        {this.renderSquare(squareNumber(row, 'b'))}
+        {this.renderSquare(squareNumber(row, 'c'))}
+        {this.renderSquare(squareNumber(row, 'd'))}
+        {this.renderSquare(squareNumber(row, 'e'))}
+        {this.renderSquare(squareNumber(row, 'f'))}
+        {this.renderSquare(squareNumber(row, 'g'))}
+        {this.renderSquare(squareNumber(row, 'h'))}
       </div>
-    );
-
+    )
   }
 
   render() {
