@@ -3,13 +3,12 @@ import ReactDOM from 'react-dom';
 import './index.css';
 
 const BOARD_ROWS = 8;
+const PIECES = ['wR','wN','wB','wQ','wK','wB','wN','wR','wP','wP','wP','wP','wP','wP','wP','wP','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','bP','bP','bP','bP','bP','bP','bP','bP','bR','bN','bB','bQ','bK','bB','bN','bR'];
 
 function Square(props) {
   return (
     <button className="square" onClick={props.onClick}>
       {props.value}
-      {props.column}
-      {props.row}
     </button>
   );
 }
@@ -20,7 +19,7 @@ function squareNumber(row, column) {
 
 function rowNum(row) {
   if (row > BOARD_ROWS || row <= 0) {
-    throw "Error: Row Number is Out of Bounds!";
+    throw new Error("Row Number is Out of Bounds!");
   } 
   return BOARD_ROWS - row;
 }
@@ -29,27 +28,59 @@ class Board extends React.Component {
   constructor() {
     super();
     this.state = {
-      squares: Array(9).fill(null),
+      squares: PIECES,
       xIsNext: true,
+      selectedIndex: null,
     };
   }
 
-  handleClick(i) {
+  handleClick(clickedIndex) {
     const squares = this.state.squares.slice();
-    squares[i] = this.state.xIsNext ? 'X' : 'O';
+    const selectedIndex = this.state.selectedIndex;
+
+    if (selectedIndex !== null) {
+      this.handleSecondClick(clickedIndex);
+      return;
+    }
+
+    if (squares[clickedIndex] === "") {
+      this.setState({selectedIndex: null});
+      return;
+    }
+
+    this.setState({selectedIndex: clickedIndex});
+  }
+
+  handleSecondClick(clickedIndex) {
+    const squares = this.state.squares.slice();
+    const selectedIndex = this.state.selectedIndex;
+
+    if (selectedIndex === null) {
+      throw new Error("handleSecondClick invoked before first click!");
+    }
+
+    if (clickedIndex === selectedIndex) {
+      this.setState({selectedIndex: null});
+      return;
+    }
+
+    squares[clickedIndex] = squares[selectedIndex];
+    squares[selectedIndex] = "";
+
     this.setState({
+      selectedIndex: null,
       squares: squares,
-      xIsNext: !this.state.xIsNext,
     });
   }
 
-  renderSquare(i,r, c) {
+  renderSquare(n,r, c) {
     return (
       <Square 
-        value={this.state.squares[i]}
+        value={this.state.squares[n]}
+        sq={n}
         row={r}
-        column = {c}
-        onClick={() => this.handleClick(i)}
+        column={c}
+        onClick={() => this.handleClick(n)}
       /> 
     );    
   }
