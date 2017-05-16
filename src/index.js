@@ -8,8 +8,8 @@ function Square(props) {
   return (
     <button className="square" onClick={props.onClick}>
       {props.value}
-      {props.row}
       {props.column}
+      {props.row}
     </button>
   );
 }
@@ -72,10 +72,10 @@ class Board extends React.Component {
 
   }
 
-   render() {
-     return (
-       <div>
-         <div className="status">{status}</div>
+  render() {
+    return (
+      <div>
+        <div className="status">{status}</div>
           {this.renderRow(rowNum(1))}
           {this.renderRow(rowNum(2))}
           {this.renderRow(rowNum(3))}
