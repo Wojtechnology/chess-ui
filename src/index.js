@@ -1,9 +1,11 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import axios from 'axios';
+
 import './index.css';
 
 const BOARD_SIZE = 8;
-const PIECES = ['wR','wN','wB','wQ','wK','wB','wN','wR','wP','wP','wP','wP','wP','wP','wP','wP','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','bP','bP','bP','bP','bP','bP','bP','bP','bR','bN','bB','bQ','bK','bB','bN','bR'];
+// const PIECES = ['','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','',''];
 
 function Square(props) {
   return (
@@ -32,9 +34,28 @@ class Board extends React.Component {
   constructor() {
     super();
     this.state = {
-      squares: PIECES,
+      game: null,
+      squares: [],
       selectedIndex: null,
     };
+  }
+
+  componentDidMount() {
+    var that = this;
+    axios.get('http://localhost:8080/game')
+      .then(function (response) {
+        that.saveGame(response.data);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+  }
+
+  saveGame(g) {
+    this.setState({
+      game: g,
+      squares: g.squares.split(','),
+    })
   }
 
   handleClick(clickedIndex) {
