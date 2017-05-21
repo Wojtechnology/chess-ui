@@ -41,10 +41,27 @@ class Board extends React.Component {
   }
 
   componentDidMount() {
-    var that = this;
+    this.getPieces();
+  }
+
+  getPieces() {
+    var board = this;
     axios.get('http://localhost:8080/game')
       .then(function (response) {
-        that.saveGame(response.data);
+        board.saveGame(response.data);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+
+  }
+
+  movePiece(fromSquare, toSquare) {
+    var board = this;
+    axios.get('http://localhost:8080/move?from=' + fromSquare + '&to=' + toSquare)
+      .then(function(response){
+        board.saveGame(response.data);
+        console.log('saved successfully')
       })
       .catch(function (error) {
         console.log(error);
@@ -63,22 +80,8 @@ class Board extends React.Component {
     const selectedIndex = this.state.selectedIndex;
 
     if (selectedIndex !== null) {
-
-      // handle second click
-      if (clickedIndex === selectedIndex) {
-        this.setState({selectedIndex: null});
-        return;
-      }
-
-      // move piece
-      squares[clickedIndex] = squares[selectedIndex];
-      squares[selectedIndex] = "";
-
-      this.setState({
-        selectedIndex: null,
-        squares: squares,
-      });
-        
+      this.movePiece(selectedIndex, clickedIndex);
+      this.setState({selectedIndex: null});
       return;
     }
 
