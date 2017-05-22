@@ -16,6 +16,7 @@ import BlackKnight from './images/Knight-B.png'
 import BlackBishop from './images/Bishop-B.png'
 import BlackQueen from './images/Queen-B.png'
 import BlackKing from './images/King-B.png'
+import EmptySquare from './images/EmptySquare.png'
 
 const BOARD_SIZE = 8;
 
@@ -52,16 +53,16 @@ class Board extends React.Component {
       selectedIndex: null,
       images: [
                 ['wP', WhitePawn],
-                ['wR', WhiteRook],
-                ['wN', WhiteKnight],
-                ['wB', WhiteBishop],
-                ['wQ', WhiteQueen],
-                ['wK', WhiteKing],
                 ['bP', BlackPawn],
-                ['bR', BlackRook],
-                ['bN', BlackKnight],
+                ['wB', WhiteBishop],
                 ['bB', BlackBishop],
+                ['wN', WhiteKnight],
+                ['bN', BlackKnight],
+                ['wR', WhiteRook],
+                ['bR', BlackRook],
+                ['wQ', WhiteQueen],
                 ['bQ', BlackQueen],
+                ['wK', WhiteKing],
                 ['bK', BlackKing],
               ],
     };
@@ -127,7 +128,7 @@ class Board extends React.Component {
         return this.state.images[i][1];
       }
     }    
-    return null;
+    return EmptySquare;
   }
 
   renderSquare(squareNumber) {
