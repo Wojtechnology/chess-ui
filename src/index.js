@@ -4,12 +4,19 @@ import axios from 'axios';
 
 import './index.css';
 
+import BlackPawn from './images/Pawn-B.png'
+import BlackRook from './images/Rook-B.png'
+import BlackKnight from './images/Knight-B.png'
+import BlackBishop from './images/Bishop-B.png'
+import BlackQueen from './images/Queen-B.png'
+import BlackKing from './images/King-B.png'
+
 const BOARD_SIZE = 8;
-// const PIECES = ['','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','',''];
 
 function Square(props) {
   return (
     <button className="square" onClick={props.onClick}>
+      <img src={props.image} alt={"Black Bishop"}/> 
       {props.value}
     </button>
   );
@@ -37,6 +44,7 @@ class Board extends React.Component {
       game: null,
       squares: [],
       selectedIndex: null,
+      images: [BlackPawn],
     };
   }
 
@@ -97,6 +105,9 @@ class Board extends React.Component {
     return (
       <Square 
         value={this.state.squares[squareNumber]}
+        // image={BlackPawn}
+        // image={this.state.inages[this.state.squares[squareNumber]]}
+        image={this.state.images[0]}
         squareNumber={squareNumber}
         onClick={() => this.handleClick(squareNumber)}
       /> 
