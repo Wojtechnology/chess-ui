@@ -4,6 +4,12 @@ import axios from 'axios';
 
 import './index.css';
 
+import WhitePawn from './images/Pawn-W.png'
+import WhiteRook from './images/Rook-W.png'
+import WhiteKnight from './images/Knight-W.png'
+import WhiteBishop from './images/Bishop-W.png'
+import WhiteQueen from './images/Queen-W.png'
+import WhiteKing from './images/King-W.png'
 import BlackPawn from './images/Pawn-B.png'
 import BlackRook from './images/Rook-B.png'
 import BlackKnight from './images/Knight-B.png'
@@ -45,7 +51,18 @@ class Board extends React.Component {
       squares: [],
       selectedIndex: null,
       images: [
-                ['bP', BlackPawn]
+                ['wP', WhitePawn],
+                ['wR', WhiteRook],
+                ['wN', WhiteKnight],
+                ['wB', WhiteBishop],
+                ['wQ', WhiteQueen],
+                ['wK', WhiteKing],
+                ['bP', BlackPawn],
+                ['bR', BlackRook],
+                ['bN', BlackKnight],
+                ['bB', BlackBishop],
+                ['bQ', BlackQueen],
+                ['bK', BlackKing],
               ],
     };
   }
@@ -104,9 +121,12 @@ class Board extends React.Component {
   }
 
   findImage(piece) {
-    if (this.state.images[0][0] === piece) {
-      return this.state.images[0][1];
-    }
+    var arrayLength = this.state.images.length;
+    for (var i = 0; i < arrayLength; i++) {
+      if (piece === this.state.images[i][0]) {
+        return this.state.images[i][1];
+      }
+    }    
     return null;
   }
 
