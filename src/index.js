@@ -44,7 +44,9 @@ class Board extends React.Component {
       game: null,
       squares: [],
       selectedIndex: null,
-      images: [BlackPawn],
+      images: [
+                ['bP', BlackPawn]
+              ],
     };
   }
 
@@ -101,13 +103,18 @@ class Board extends React.Component {
     this.setState({selectedIndex: clickedIndex});
   }
 
+  findImage(piece) {
+    if (this.state.images[0][0] === piece) {
+      return this.state.images[0][1];
+    }
+    return null;
+  }
+
   renderSquare(squareNumber) {
     return (
       <Square 
         value={this.state.squares[squareNumber]}
-        // image={BlackPawn}
-        // image={this.state.inages[this.state.squares[squareNumber]]}
-        image={this.state.images[0]}
+        image={this.findImage(this.state.squares[squareNumber])}
         squareNumber={squareNumber}
         onClick={() => this.handleClick(squareNumber)}
       /> 
