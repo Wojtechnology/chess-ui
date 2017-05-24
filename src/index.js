@@ -22,7 +22,7 @@ const BOARD_SIZE = 8;
 
 function Square(props) {
   return (
-    <button className="square" onClick={props.onClick}>
+    <button className={props.squareColor} onClick={props.onClick}>
       <img src={props.image} alt={"Black Bishop"}/> 
       {props.value}
     </button>
@@ -131,28 +131,31 @@ class Board extends React.Component {
     return EmptySquare;
   }
 
-  renderSquare(squareNumber) {
+  renderSquare(squareNumber, squareColor) {
     return (
       <Square 
         value={this.state.squares[squareNumber]}
         image={this.findImage(this.state.squares[squareNumber])}
         squareNumber={squareNumber}
+        squareColor={squareColor}
         onClick={() => this.handleClick(squareNumber)}
       /> 
     );    
   }
 
-  renderRow(row) {
+  renderRow(row, firstColor) {
+    const color1 = firstColor;
+    const color2 = firstColor === "whiteSquare" ? "blackSquare" : "whiteSquare";
     return (
       <div className="board-row">
-        {this.renderSquare(squareNumber(row, 'a'))}
-        {this.renderSquare(squareNumber(row, 'b'))}
-        {this.renderSquare(squareNumber(row, 'c'))}
-        {this.renderSquare(squareNumber(row, 'd'))}
-        {this.renderSquare(squareNumber(row, 'e'))}
-        {this.renderSquare(squareNumber(row, 'f'))}
-        {this.renderSquare(squareNumber(row, 'g'))}
-        {this.renderSquare(squareNumber(row, 'h'))}
+        {this.renderSquare(squareNumber(row, 'a'), color1)}
+        {this.renderSquare(squareNumber(row, 'b'), color2)}
+        {this.renderSquare(squareNumber(row, 'c'), color1)}
+        {this.renderSquare(squareNumber(row, 'd'), color2)}
+        {this.renderSquare(squareNumber(row, 'e'), color1)}
+        {this.renderSquare(squareNumber(row, 'f'), color2)}
+        {this.renderSquare(squareNumber(row, 'g'), color1)}
+        {this.renderSquare(squareNumber(row, 'h'), color2)}
       </div>
     )
   }
@@ -161,14 +164,14 @@ class Board extends React.Component {
     return (
       <div>
         <div className="status">{status}</div>
-          {this.renderRow(rowNum(1))}
-          {this.renderRow(rowNum(2))}
-          {this.renderRow(rowNum(3))}
-          {this.renderRow(rowNum(4))}
-          {this.renderRow(rowNum(5))}
-          {this.renderRow(rowNum(6))}
-          {this.renderRow(rowNum(7))}
-          {this.renderRow(rowNum(8))}
+          {this.renderRow(rowNum(1), "whiteSquare")}
+          {this.renderRow(rowNum(2), "blackSquare")}
+          {this.renderRow(rowNum(3), "whiteSquare")}
+          {this.renderRow(rowNum(4), "blackSquare")}
+          {this.renderRow(rowNum(5), "whiteSquare")}
+          {this.renderRow(rowNum(6), "blackSquare")}
+          {this.renderRow(rowNum(7), "whiteSquare")}
+          {this.renderRow(rowNum(8), "blackSquare")}
       </div>
     );
   }
