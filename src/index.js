@@ -1,6 +1,5 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import axios from 'axios';
 
 import './index.css';
 
@@ -73,22 +72,16 @@ class Board extends React.Component {
   }
 
   getPieces() {
-    var board = this;
-    fetch('http://localhost:8080/game').then((response) => {
-      if (response.ok) {
-        return response.json();
-      }
-      throw new Error('Network response was not ok. Error: ' + response.error);
-    }).then((game) => {
-      board.saveGame(game);
-    }).catch((error) => {
-      console.log('There has been a problem with your fetch operation: ' + error.message);
-    });
+    this.callService('http://localhost:8080/game');
   }
 
   movePiece(fromSquare, toSquare) {
+    this.callService('http://localhost:8080/move?from=' + fromSquare + '&to=' + toSquare);
+  }
+
+  callService(url) {
     var board = this;
-    fetch('http://localhost:8080/move?from=' + fromSquare + '&to=' + toSquare).then((response) => {
+    fetch(url).then((response) => {
       if (response.ok) {
         return response.json();
       }
@@ -98,6 +91,7 @@ class Board extends React.Component {
     }).catch((error) => {
       console.log('There has been a problem with your fetch operation: ' + error.message);
     });
+
   }
 
   saveGame(g) {
