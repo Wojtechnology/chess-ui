@@ -74,12 +74,6 @@ class Board extends React.Component {
 
   getPieces() {
     var board = this;
-    // axios.get('http://localhost:8080/game')
-    //   .then(function (response) {
-    //     board.saveGame(response.data);
-    //   }).catch(function (error) {
-    //     console.log(error);
-    //   });
     fetch('http://localhost:8080/game').then((response) => {
       if (response.ok) {
         return response.json();
@@ -94,13 +88,6 @@ class Board extends React.Component {
 
   movePiece(fromSquare, toSquare) {
     var board = this;
-    // axios.get('http://localhost:8080/move?from=' + fromSquare + '&to=' + toSquare)
-    //   .then(function(response){
-    //     board.saveGame(response.data);
-    //   })
-    //   .catch(function (error) {
-    //     console.log(error);
-    //   });
     fetch('http://localhost:8080/move?from=' + fromSquare + '&to=' + toSquare).then((response) => {
       if (response.ok) {
         return response.json();
