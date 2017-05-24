@@ -87,20 +87,30 @@ class Board extends React.Component {
       throw new Error('Network response was not ok. Error: ' + response.error);
     }).then((game) => {
       board.saveGame(game);
-    }).catch(function (error) {
+    }).catch((error) => {
       console.log('There has been a problem with your fetch operation: ' + error.message);
     });
   }
 
   movePiece(fromSquare, toSquare) {
     var board = this;
-    axios.get('http://localhost:8080/move?from=' + fromSquare + '&to=' + toSquare)
-      .then(function(response){
-        board.saveGame(response.data);
-      })
-      .catch(function (error) {
-        console.log(error);
-      });
+    // axios.get('http://localhost:8080/move?from=' + fromSquare + '&to=' + toSquare)
+    //   .then(function(response){
+    //     board.saveGame(response.data);
+    //   })
+    //   .catch(function (error) {
+    //     console.log(error);
+    //   });
+    fetch('http://localhost:8080/move?from=' + fromSquare + '&to=' + toSquare).then((response) => {
+      if (response.ok) {
+        return response.json();
+      }
+      throw new Error('Network response was not ok. Error: ' + response.error);
+    }).then((game) => {
+      board.saveGame(game);
+    }).catch((error) => {
+      console.log('There has been a problem with your fetch operation: ' + error.message);
+    });
   }
 
   saveGame(g) {
