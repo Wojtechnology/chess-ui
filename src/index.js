@@ -22,7 +22,7 @@ const BOARD_SIZE = 8;
 function Square(props) {
   return (
     <button className={props.squareColor} onClick={props.onClick}>
-      <img src={props.image} alt={"Black Bishop"}/> 
+      <img className="img" src={props.image} alt={"Black Bishop"}/> 
       {props.value}
     </button>
   );
