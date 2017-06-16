@@ -182,8 +182,10 @@ class Game extends React.Component {
         <div className="game-board">
           <Board />
         </div>
-        <p>Message</p>
-      </div>
+        <div className="game-info">
+          <div>Message</div>
+          <ol>{/* TODO */}</ol>
+        </div>      </div>
     );
   }
 }
