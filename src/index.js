@@ -22,7 +22,7 @@ const BOARD_SIZE = 8;
 function Square(props) {
   return (
     <button className={props.squareColor} onClick={props.onClick}>
-      <img className="img" src={props.image} alt={"Black Bishop"}/> 
+      <img className="img" src={props.image} alt={"Black Bishop"}/>
       {props.value}
     </button>
   );
@@ -39,7 +39,7 @@ function columnNumber(col) {
 function rowNum(row) {
   if (row > BOARD_SIZE || row <= 0) {
     throw new Error("Row Number is Out of Bounds!");
-  } 
+  }
   return BOARD_SIZE - row;
 }
 
@@ -82,16 +82,13 @@ class Board extends React.Component {
   callService(url) {
     var board = this;
     fetch(url).then((response) => {
-      if (response.ok) {
-        return response.json();
-      }
-      throw new Error('Network response was not ok. Error: ' + response.error);
+      if (!response.ok) { throw response }
+      return response.json();
     }).then((game) => {
       board.saveGame(game);
-    }).catch((error) => {
-      console.log('There has been a problem with your fetch operation: ' + error.message);
+    }).catch((err) => {
+      err.text().then(errMsg => console.log('Caught error: ' + errMsg));
     });
-
   }
 
   saveGame(g) {
@@ -125,20 +122,20 @@ class Board extends React.Component {
       if (piece === this.state.images[i][0]) {
         return this.state.images[i][1];
       }
-    }    
+    }
     return EmptySquare;
   }
 
   renderSquare(squareNumber, squareColor) {
     return (
-      <Square 
+      <Square
         value={this.state.squares[squareNumber]}
         image={this.findImage(this.state.squares[squareNumber])}
         squareNumber={squareNumber}
         squareColor={squareColor}
         onClick={() => this.handleClick(squareNumber)}
-      /> 
-    );    
+      />
+    );
   }
 
   renderRow(row, firstColor) {
